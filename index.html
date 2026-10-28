@@ -1,0 +1,647 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10251d">
+<title>RAIL-URJA | VibeVolt</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --forest:#10251d;
+  --forest2:#193b2c;
+  --green:#367b53;
+  --lime:#c7e5a3;
+  --cream:#f5f5ef;
+  --paper:#fff;
+  --ink:#1b2c23;
+  --muted:#839087;
+  --line:#e7eae3;
+  --gold:#e4bc75;
+  --shadow:0 12px 35px rgba(25,47,33,.055);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:25px}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink)}
+button{font:inherit;cursor:pointer}
+.app{min-height:100vh;display:flex}
+.sidebar{
+  width:250px;flex-shrink:0;height:100vh;position:sticky;top:0;
+  background:var(--forest);color:white;padding:27px 18px;
+  display:flex;flex-direction:column;z-index:10;
+}
+.brand{display:flex;align-items:center;gap:12px;padding:0 7px 36px}
+.logo{
+  height:46px;width:46px;border-radius:15px;background:var(--lime);
+  color:var(--forest);display:grid;place-items:center;
+  font-size:28px;font-weight:800;box-shadow:0 6px 20px #0002;
+}
+.brand h2{font:800 19px 'Manrope',sans-serif;letter-spacing:.3px}
+.brand p{font-size:9px;letter-spacing:1.8px;color:#b5cbbb;margin-top:4px}
+.nav-label{font-size:9px;letter-spacing:2px;color:#81978a;padding:0 12px 13px}
+.nav{display:grid;gap:6px}
+.nav button{
+  border:0;background:transparent;color:#b3c2b7;text-align:left;
+  display:flex;align-items:center;gap:13px;padding:13px 14px;
+  border-radius:12px;font-size:12px;transition:.2s;
+}
+.nav button:hover,.nav button.active{background:#254634;color:white}
+.nav button.active{box-shadow:inset 3px 0 var(--lime)}
+.nav-ico{width:23px;font-size:19px;text-align:center}
+.side-bottom{margin-top:auto}
+.mission{
+  border:1px solid #34503d;border-radius:17px;padding:17px;
+  background:linear-gradient(145deg,#203e2c,#162d21);
+}
+.mission-label{color:#b6d0b5;font-size:9px;letter-spacing:1.5px}
+.mission h3{font:700 16px/1.5 'Manrope',sans-serif;margin-top:11px}
+.mission p{font-size:11px;line-height:1.8;color:#a9bdb0;margin-top:7px}
+.side-footer{font-size:9px;color:#7f9385;margin:20px 5px 0;line-height:1.7}
+.main{flex:1;min-width:0}
+.topbar{
+  height:75px;background:#fff;border-bottom:1px solid var(--line);
+  padding:0 38px;display:flex;align-items:center;justify-content:space-between;gap:15px;
+}
+.crumb{font-size:11px;color:var(--muted)}
+.crumb strong{color:var(--ink)}
+.top-actions{display:flex;align-items:center;gap:13px}
+.status-live{
+  display:flex;align-items:center;gap:8px;padding:9px 13px;
+  border:1px solid #d9e7d9;border-radius:30px;
+  background:#f2f8ef;color:#357349;font-size:10px;font-weight:700;
+}
+.pulse{width:7px;height:7px;border-radius:50%;background:#50a969;animation:pulse 1.5s infinite}
+.avatar{width:37px;height:37px;display:grid;place-items:center;border-radius:50%;background:#e4eee0;color:#2c6340;font-weight:800}
+.content{width:100%;max-width:1750px;margin:auto;padding:32px 38px 45px}
+
+/* HERO */
+.hero{
+  min-height:255px;position:relative;overflow:hidden;border-radius:23px;
+  padding:34px 36px;display:flex;align-items:center;justify-content:space-between;gap:25px;
+  color:white;background:
+  radial-gradient(ellipse at 85% 15%,#49764c 0%,transparent 36%),
+  linear-gradient(110deg,#153b2a,#1c5137 70%,#275e3c);
+  box-shadow:0 16px 35px #183c2a19;
+}
+.hero:before,.hero:after{
+  content:"";position:absolute;border:1px solid #ffffff12;border-radius:50%;
+  width:370px;height:370px;right:5%;top:-245px;pointer-events:none;
+}
+.hero:after{width:450px;height:450px;right:1%;top:-285px}
+.hero-copy{position:relative;z-index:2;max-width:700px}
+.eyebrow{font-size:10px;letter-spacing:2.4px;font-weight:700;color:#cce0c7}
+.hero h1{font:800 clamp(30px,3.2vw,46px)/1.15 'Manrope',sans-serif;letter-spacing:-1.8px;margin-top:15px}
+.hero h1 span{color:var(--lime)}
+.hero p{font-size:13px;line-height:1.9;color:#d0dfd2;max-width:590px;margin-top:14px}
+.hero-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}
+.hero-chip{font-size:10px;color:#edf6e9;border:1px solid #ffffff30;background:#ffffff0b;padding:8px 11px;border-radius:8px}
+.hero-art{width:245px;min-width:190px;height:185px;position:relative;z-index:1;display:grid;place-items:center}
+.art-orbit{position:absolute;width:180px;height:180px;border:1px solid #ffffff25;border-radius:50%}
+.art-orbit:before,.art-orbit:after{content:"";position:absolute;inset:15px;border:1px dashed #ffffff25;border-radius:50%}
+.art-orbit:after{inset:33px;border-style:solid}
+.art-bolt{font-size:94px;color:var(--lime);text-shadow:0 0 40px #c7e5a350;animation:float 3s ease-in-out infinite}
+.art-label{position:absolute;bottom:0;right:0;border:1px solid #ffffff2d;border-radius:12px;background:#ffffff0d;padding:12px 15px}
+.art-label strong{display:block;font:800 12px 'Manrope',sans-serif}
+.art-label span{display:block;font-size:9px;letter-spacing:1.4px;color:#c8ddc9;margin-top:5px}
+
+/* SECTION HEADINGS */
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:30px 0 16px}
+.section-head h2{font:800 19px 'Manrope',sans-serif;letter-spacing:-.4px}
+.section-head p{font-size:11px;color:var(--muted);margin-top:5px}
+.micro-label{font-size:9px;letter-spacing:1.5px;color:#87958a}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.metric{
+  position:relative;overflow:hidden;background:white;border:1px solid var(--line);
+  border-radius:18px;padding:21px;box-shadow:var(--shadow);min-width:0;
+}
+.metric:after{content:"";position:absolute;width:65px;height:65px;border-radius:50%;background:#eff5ec;right:-30px;bottom:-30px}
+.metric-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.metric-title{font-size:11px;color:#78867c;font-weight:600}
+.metric-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:#edf4e9;font-size:20px;flex-shrink:0}
+.metric-value{font:800 clamp(24px,2.1vw,33px) 'Manrope',sans-serif;letter-spacing:-1px;margin-top:17px;overflow-wrap:anywhere}
+.metric-value small{font-size:14px;color:#859188;letter-spacing:0}
+.metric-foot{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--muted);margin-top:10px}
+.pill{padding:4px 7px;border-radius:6px;background:#e8f4e7;color:#337348;font-size:9px;font-weight:700}
+
+/* PANELS */
+.grid-main{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,1fr);gap:17px;margin-top:19px}
+.panel{min-width:0;background:#fff;border:1px solid var(--line);border-radius:19px;padding:23px;box-shadow:var(--shadow)}
+.panel-heading{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.panel-heading h3{font:800 14px 'Manrope',sans-serif}
+.panel-heading p{font-size:10px;color:var(--muted);margin-top:6px;line-height:1.6}
+.panel-tag{padding:7px 9px;border-radius:8px;background:#edf5e9;color:#36734b;font-size:9px;font-weight:700;white-space:nowrap}
+.voltage-summary{display:flex;align-items:baseline;gap:8px;margin-top:22px}
+.voltage-summary strong{font:800 37px 'Manrope',sans-serif;letter-spacing:-1.5px}
+.voltage-summary span{font-size:12px;color:var(--muted)}
+.graph{height:180px;margin-top:10px}
+.graph svg{height:100%;width:100%;overflow:visible}
+.graph-grid{stroke:#e9eee7;stroke-width:1;stroke-dasharray:4 5}
+.graph-line{fill:none;stroke:#3e8054;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.graph-fill{fill:url(#fill)}
+.graph-point{fill:white;stroke:#3e8054;stroke-width:3}
+.graph-times{display:flex;justify-content:space-between;color:#99a399;font-size:9px;margin-top:7px}
+.graph-legend{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px;margin-top:17px}
+.legend-dot{width:8px;height:8px;background:#3e8054;border-radius:50%}
+
+/* SENSORS */
+.sensor-list{display:grid;gap:11px;margin-top:21px}
+.sensor{
+  display:flex;align-items:center;gap:11px;padding:14px 12px;
+  border:1px solid #e8ece5;background:#fdfefb;border-radius:14px;
+}
+.sensor-icon{width:41px;height:41px;border-radius:12px;background:#edf4e9;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.sensor-info{flex:1;min-width:0}
+.sensor-info h4{font:700 11px 'Manrope',sans-serif}
+.sensor-info p{font-size:9px;color:var(--muted);margin-top:5px}
+.badge{display:flex;align-items:center;gap:5px;border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;white-space:nowrap}
+.badge:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.badge.on{background:#e6f4e6;color:#2e7746}
+.badge.off{background:#f7efd9;color:#92702f}
+.divider{height:1px;background:var(--line);margin:17px 0}
+.info-row{display:flex;justify-content:space-between;gap:10px;font-size:10px;margin-top:12px}
+.info-row span{color:var(--muted)}
+.info-row strong{font-weight:700;text-align:right}
+
+/* RAILWAY VISUAL */
+.rail-panel{margin-top:19px}
+.scene{
+  height:245px;position:relative;overflow:hidden;border-radius:16px;margin-top:19px;
+  background:linear-gradient(180deg,#dbeae0 0%,#e8eedf 67%,#c3d4b8 100%);
+}
+.sun{position:absolute;right:12%;top:23px;width:43px;height:43px;border-radius:50%;background:#e9c77c;box-shadow:0 0 0 11px #e9c77c22}
+.cloud{position:absolute;left:15%;top:43px;width:66px;height:14px;background:#ffffff90;border-radius:20px}
+.cloud:before,.cloud:after{content:"";position:absolute;border-radius:50%;background:inherit}
+.cloud:before{width:25px;height:25px;left:10px;top:-12px}
+.cloud:after{width:20px;height:20px;left:33px;top:-8px}
+.hill{position:absolute;bottom:73px;width:48%;height:110px;border-radius:50% 50% 0 0;background:#b7cfb1}
+.hill.left{left:-8%;transform:rotate(-7deg)}
+.hill.right{right:-8%;height:135px;background:#c5d9bc;transform:rotate(8deg)}
+.track{
+  position:absolute;left:-5%;bottom:19px;width:110%;height:67px;
+  background:repeating-linear-gradient(90deg,transparent 0 28px,#87978a 29px 34px,transparent 35px 48px);
+  border-top:6px solid #65756b;border-bottom:6px solid #65756b;
+  transform:perspective(200px) rotateX(7deg);
+}
+.track:after{content:"";position:absolute;top:26px;left:0;right:0;border-top:4px solid #e7eadf}
+.train{
+  position:absolute;bottom:85px;left:22%;width:230px;height:62px;
+  border-radius:14px 20px 5px 5px;background:#285d43;border-bottom:7px solid #d7ac62;
+  box-shadow:0 10px 18px #263b291f;animation:train 5s ease-in-out infinite alternate;
+}
+.train:before{
+  content:"";position:absolute;left:14px;top:10px;width:42px;height:27px;
+  border-radius:6px;background:#d9e9d7;
+  box-shadow:49px 0 #d9e9d7,98px 0 #d9e9d7,147px 0 #d9e9d7;
+}
+.train:after{
+  content:"";position:absolute;left:19px;bottom:-15px;width:19px;height:19px;
+  border-radius:50%;background:#27392d;border:3px solid #e2e9df;
+  box-shadow:49px 0 #27392d,98px 0 #27392d,147px 0 #27392d;
+}
+.rail-caption{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:17px}
+.rail-caption h3{font:800 13px 'Manrope',sans-serif}
+.rail-caption p{font-size:10px;color:var(--muted);line-height:1.7;margin-top:5px}
+.rail-tag{background:#e9f3e6;color:#34744b;padding:8px 10px;border-radius:8px;font-size:9px;font-weight:700;white-space:nowrap}
+
+/* FLOW */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px;margin-top:18px}
+.flow-step{background:#fafbf8;border:1px solid var(--line);border-radius:13px;padding:16px 9px;text-align:center;position:relative}
+.flow-step .emoji{font-size:24px}
+.flow-step h4{font:700 10px 'Manrope',sans-serif;margin-top:9px}
+.flow-step p{font-size:9px;color:var(--muted);line-height:1.6;margin-top:5px}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:17px;margin-top:19px}
+.about-copy{background:#e7efe2;border:1px solid #dce6d6;border-radius:19px;padding:25px}
+.about-copy .eyebrow{color:#4b7956}
+.about-copy h3{font:800 20px 'Manrope',sans-serif;margin-top:12px}
+.about-copy p{font-size:11px;color:#647569;line-height:1.9;margin-top:10px}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.feature{background:white;border:1px solid var(--line);border-radius:15px;padding:16px}
+.feature .icon{font-size:21px}
+.feature h4{font:700 11px 'Manrope',sans-serif;margin-top:10px}
+.feature p{font-size:9px;color:var(--muted);line-height:1.7;margin-top:6px}
+.footer{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding-top:21px;margin-top:29px;border-top:1px solid #e1e7de;color:#8b978e;font-size:9px}
+.footer strong{color:#385b43;letter-spacing:1px}
+
+@keyframes pulse{50%{opacity:.35}}
+@keyframes float{50%{transform:translateY(-8px)}}
+@keyframes train{from{transform:translateX(-5px)}to{transform:translateX(17px)}}
+
+@media(min-width:1500px){
+  .content{padding:38px 48px 50px}
+  .metrics{gap:19px}
+  .metric{padding:25px}
+  .panel{padding:27px}
+  .scene{height:275px}
+}
+@media(max-width:1150px){
+  .sidebar{width:215px;padding:24px 13px}
+  .content{padding:24px}
+  .topbar{padding:0 24px}
+  .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-main{grid-template-columns:minmax(0,1.2fr) minmax(270px,1fr)}
+  .hero-art{width:190px}
+}
+@media(max-width:800px){
+  .app{display:block}
+  .sidebar{display:none}
+  .topbar{height:65px;padding:0 17px}
+  .content{padding:18px 15px 32px}
+  .hero{min-height:unset;padding:25px 22px}
+  .hero-art{display:none}
+  .hero h1{font-size:31px}
+  .grid-main,.about-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero{padding:22px 18px;border-radius:17px}
+  .hero h1{font-size:27px}
+  .hero p{font-size:11px}
+  .section-head{margin-top:25px}
+  .section-head h2{font-size:17px}
+  .metrics{gap:9px}
+  .metric{padding:14px;border-radius:14px}
+  .metric-title{font-size:9px}
+  .metric-icon{width:33px;height:33px;font-size:16px}
+  .metric-value{font-size:24px;margin-top:13px}
+  .metric-foot{font-size:9px;flex-wrap:wrap}
+  .panel{padding:16px;border-radius:16px}
+  .badge{font-size:8px;padding:7px 6px}
+  .sensor{gap:8px;padding:11px 9px}
+  .sensor-icon{width:34px;height:34px;font-size:16px}
+  .sensor-info h4{font-size:10px}
+  .sensor-info p{font-size:8px}
+  .scene{height:185px}
+  .train{width:165px;height:48px;left:18%;bottom:75px}
+  .train:before{width:30px;height:21px;box-shadow:36px 0 #d9e9d7,72px 0 #d9e9d7,108px 0 #d9e9d7}
+  .train:after{width:16px;height:16px;box-shadow:36px 0 #27392d,72px 0 #27392d,108px 0 #27392d}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .features{gap:8px}
+  .feature{padding:12px}
+  .voltage-summary strong{font-size:31px}
+  .graph{height:150px}
+  .rail-tag{font-size:8px;padding:7px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">ϟ</div>
+      <div>
+        <h2>RAIL-URJA</h2>
+        <p>VIBEVOLT ENERGY</p>
+      </div>
+    </div>
+
+    <div class="nav-label">MAIN MENU</div>
+    <nav class="nav">
+      <button class="active" data-target="overview"><span class="nav-ico">⌂</span> Overview</button>
+      <button data-target="energy"><span class="nav-ico">ϟ</span> Energy Analytics</button>
+      <button data-target="sensors"><span class="nav-ico">◉</span> Sensor Intelligence</button>
+      <button data-target="railway"><span class="nav-ico">▤</span> Railway System</button>
+      <button data-target="about"><span class="nav-ico">✳</span> Our Mission</button>
+    </nav>
+
+    <div class="side-bottom">
+      <div class="mission">
+        <div class="mission-label">THE VIBEVOLT VISION</div>
+        <h3>Small vibrations.<br>Big possibilities.</h3>
+        <p>Exploring cleaner energy through railway innovation.</p>
+      </div>
+      <div class="side-footer">RAIL-URJA<br>SMART RAIL ELECTRICITY GENERATION</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="crumb">Workspace &nbsp; / &nbsp; <strong>Energy Dashboard</strong></div>
+      <div class="top-actions">
+        <div class="status-live"><span class="pulse"></span> SYSTEM ACTIVE</div>
+        <div class="avatar">V</div>
+      </div>
+    </header>
+
+    <div class="content" id="overview">
+
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">SMART RAIL ELECTRICITY GENERATION</div>
+          <h1>Turning motion into<br><span>meaningful energy.</span></h1>
+          <p>Meet RAIL-URJA by VibeVolt — an innovative approach to recovering useful electrical energy from railway vibrations for a more sustainable future.</p>
+          <div class="hero-chips">
+            <span class="hero-chip">✳ Clean Energy</span>
+            <span class="hero-chip">↗ Smart Monitoring</span>
+            <span class="hero-chip">♻ Sustainability</span>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="art-orbit"></div>
+          <div class="art-bolt">ϟ</div>
+          <div class="art-label">
+            <strong>RAIL-URJA</strong>
+            <span>ENERGY IN MOTION</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-head">
+        <div>
+          <h2>System Overview</h2>
+          <p>A clear view of the railway energy system.</p>
+        </div>
+        <div class="micro-label">01 / MONITORING</div>
+      </div>
+
+      <section class="metrics">
+        <article class="metric">
+          <div class="metric-top">
+            <div class="metric-title">Voltage Output</div>
+            <div class="metric-icon">ϟ</div>
+          </div>
+          <div class="metric-value"><span id="voltage">5.2</span> <small>V</small></div>
+          <div class="metric-foot"><span class="pill">LIVE</span> Voltage reading</div>
+        </article>
+
+        <article class="metric">
+          <div class="metric-top">
+            <div class="metric-title">Vibration Sensor</div>
+            <div class="metric-icon">〰</div>
+          </div>
+          <div class="metric-value" id="vibrationMetric" style="font-size:23px">Detected</div>
+          <div class="metric-foot"><span class="pill">STATUS</span> Movement detection</div>
+        </article>
+
+        <article class="metric">
+          <div class="metric-top">
+            <div class="metric-title">Current Sensor</div>
+            <div class="metric-icon">⌁</div>
+          </div>
+          <div class="metric-value" id="currentMetric" style="font-size:23px">Detected</div>
+          <div class="metric-foot"><span class="pill">STATUS</span> Current monitoring</div>
+        </article>
+
+        <article class="metric">
+          <div class="metric-top">
+            <div class="metric-title">Energy Source</div>
+            <div class="metric-icon">♻</div>
+          </div>
+          <div class="metric-value" style="font-size:23px">Vibration</div>
+          <div class="metric-foot"><span class="pill">CLEAN</span> Energy recovery</div>
+        </article>
+      </section>
+
+      <div class="grid-main">
+        <section class="panel" id="energy">
+          <div class="panel-heading">
+            <div>
+              <h3>Energy Analytics</h3>
+              <p>Visual trend of recent voltage readings</p>
+            </div>
+            <span class="panel-tag">1–10 V RANGE</span>
+          </div>
+
+          <div class="voltage-summary">
+            <strong><span id="graphVoltage">5.2</span> V</strong>
+            <span>Current voltage</span>
+          </div>
+
+          <div class="graph">
+            <svg viewBox="0 0 600 180" preserveAspectRatio="none" role="img" aria-label="Voltage trend chart">
+              <defs>
+                <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4b9568" stop-opacity=".24"/>
+                  <stop offset="100%" stop-color="#4b9568" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line class="graph-grid" x1="0" y1="20" x2="600" y2="20"/>
+              <line class="graph-grid" x1="0" y1="65" x2="600" y2="65"/>
+              <line class="graph-grid" x1="0" y1="110" x2="600" y2="110"/>
+              <line class="graph-grid" x1="0" y1="155" x2="600" y2="155"/>
+              <path id="graphFill" class="graph-fill" d="M0 130 L75 112 L150 120 L225 72 L300 92 L375 47 L450 78 L525 40 L600 65 L600 170 L0 170 Z"/>
+              <path id="graphLine" class="graph-line" d="M0 130 L75 112 L150 120 L225 72 L300 92 L375 47 L450 78 L525 40 L600 65"/>
+              <circle id="graphPoint" class="graph-point" cx="600" cy="65" r="5"/>
+            </svg>
+          </div>
+
+          <div class="graph-times"><span>Earlier</span><span>Recent readings</span><span>Now</span></div>
+          <div class="graph-legend"><span class="legend-dot"></span> Voltage trend · Refreshes every 4 seconds</div>
+        </section>
+
+        <section class="panel" id="sensors">
+          <div class="panel-heading">
+            <div>
+              <h3>Sensor Intelligence</h3>
+              <p>Railway system status at a glance</p>
+            </div>
+            <span class="panel-tag">STATUS</span>
+          </div>
+
+          <div class="sensor-list">
+            <div class="sensor">
+              <div class="sensor-icon">〰</div>
+              <div class="sensor-info">
+                <h4>Vibration Sensor</h4>
+                <p>Railway movement detection</p>
+              </div>
+              <div class="badge on" id="vibrationStatus">Detected</div>
+            </div>
+
+            <div class="sensor">
+              <div class="sensor-icon">⌁</div>
+              <div class="sensor-info">
+                <h4>Current Sensor</h4>
+                <p>Electrical current monitoring</p>
+              </div>
+              <div class="badge on" id="currentStatus">Detected</div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="info-row"><span>System category</span><strong>Rail energy</strong></div>
+          <div class="info-row"><span>Conversion process</span><strong>Motion → Electricity</strong></div>
+          <div class="info-row"><span>Dashboard</span><strong>Energy monitoring</strong></div>
+        </section>
+      </div>
+
+      <section class="panel rail-panel" id="railway">
+        <div class="panel-heading">
+          <div>
+            <h3>Railway Energy System</h3>
+            <p>How the RAIL-URJA concept works</p>
+          </div>
+          <span class="panel-tag">SYSTEM FLOW</span>
+        </div>
+
+        <div class="scene">
+          <div class="sun"></div>
+          <div class="cloud"></div>
+          <div class="hill left"></div>
+          <div class="hill right"></div>
+          <div class="track"></div>
+          <div class="train"></div>
+        </div>
+
+        <div class="rail-caption">
+          <div>
+            <h3>Smart Rail Energy Harvester</h3>
+            <p>Capturing railway vibrations and exploring their potential as an energy source.</p>
+          </div>
+          <span class="rail-tag">RAIL-URJA · VIBEVOLT</span>
+        </div>
+
+        <div class="flow">
+          <div class="flow-step">
+            <div class="emoji">🚆</div>
+            <h4>01 · Train Movement</h4>
+            <p>Moving trains create vibrations.</p>
+          </div>
+          <div class="flow-step">
+            <div class="emoji">↕️</div>
+            <h4>02 · Pressure Plate</h4>
+            <p>Vibrations create mechanical movement.</p>
+          </div>
+          <div class="flow-step">
+            <div class="emoji">⚡</div>
+            <h4>03 · Generation</h4>
+            <p>A conversion mechanism produces electricity.</p>
+          </div>
+          <div class="flow-step">
+            <div class="emoji">🔋</div>
+            <h4>04 · Storage</h4>
+            <p>Electrical energy can be stored for use.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-grid" id="about">
+        <div class="about-copy">
+          <div class="eyebrow">THE IDEA BEHIND THE PROJECT</div>
+          <h3>Engineering a greener railway.</h3>
+          <p>RAIL-URJA explores the potential of converting railway vibrations into useful electrical energy. The concept brings together pressure plates, an energy conversion mechanism, storage and smart monitoring. Its long-term vision is to support suitable low-power applications while encouraging sustainable thinking.</p>
+        </div>
+
+        <div class="features">
+          <article class="feature">
+            <div class="icon">♻️</div>
+            <h4>Clean Energy</h4>
+            <p>Exploring energy recovery from railway movement.</p>
+          </article>
+          <article class="feature">
+            <div class="icon">📊</div>
+            <h4>Smart Monitoring</h4>
+            <p>A clear view of voltage and sensor status.</p>
+          </article>
+          <article class="feature">
+            <div class="icon">🌱</div>
+            <h4>Sustainability</h4>
+            <p>Encouraging efficient use of available energy.</p>
+          </article>
+          <article class="feature">
+            <div class="icon">💡</div>
+            <h4>Future Potential</h4>
+            <p>Exploring applications for low-power needs.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span><strong>RAIL-URJA · VIBEVOLT</strong> &nbsp; | &nbsp; Smart Rail Electricity Generation</span>
+        <span>Innovation for a sustainable tomorrow.</span>
+      </footer>
+    </div>
+  </main>
+</div>
+
+<script>
+/* Voltage display and chart */
+const voltageEl = document.getElementById("voltage");
+const graphVoltageEl = document.getElementById("graphVoltage");
+let voltage = 5.2;
+let readings = [5.2, 4.5, 6.1, 3.8, 7.3, 5.7, 8.1, 6.4, 7.0];
+
+function drawGraph() {
+  const points = readings.map((value, index) => {
+    const x = index * (600 / (readings.length - 1));
+    const y = 155 - ((value - 1) / 9) * 130;
+    return `${x},${y}`;
+  });
+
+  const path = "M" + points.join(" L");
+  document.getElementById("graphLine").setAttribute("d", path);
+  document.getElementById("graphFill").setAttribute(
+    "d", path + " L600,170 L0,170 Z"
+  );
+
+  const last = points[points.length - 1].split(",");
+  document.getElementById("graphPoint").setAttribute("cx", last[0]);
+  document.getElementById("graphPoint").setAttribute("cy", last[1]);
+}
+
+function updateVoltage() {
+  let next;
+  do {
+    next = Math.floor(Math.random() * 91 + 10) / 10;
+  } while (next === voltage);
+
+  voltage = next;
+  voltageEl.textContent = voltage.toFixed(1);
+  graphVoltageEl.textContent = voltage.toFixed(1);
+  readings.push(voltage);
+  readings.shift();
+  drawGraph();
+}
+drawGraph();
+setInterval(updateVoltage, 4000);
+
+/* Sensor status badges and overview metrics */
+function updateStatus(badgeId, metricId, detected) {
+  const badge = document.getElementById(badgeId);
+  const metric = document.getElementById(metricId);
+
+  badge.classList.toggle("on", detected);
+  badge.classList.toggle("off", !detected);
+  badge.textContent = detected ? "Detected" : "Not Detected";
+
+  metric.textContent = detected ? "Detected" : "Not Detected";
+  metric.style.fontSize = detected ? "23px" : "17px";
+}
+
+/* Vibration status toggles every 4 seconds */
+let vibrationDetected = true;
+setInterval(() => {
+  vibrationDetected = !vibrationDetected;
+  updateStatus("vibrationStatus", "vibrationMetric", vibrationDetected);
+}, 4000);
+
+/* Current status toggles every 8 seconds */
+let currentDetected = true;
+setInterval(() => {
+  currentDetected = !currentDetected;
+  updateStatus("currentStatus", "currentMetric", currentDetected);
+}, 8000);
+
+/* Sidebar navigation */
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", () => {
+    const target = document.getElementById(button.dataset.target);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    document.querySelectorAll(".nav button").forEach(item =>
+      item.classList.remove("active")
+    );
+    button.classList.add("active");
+  });
+});
+</script>
+</body>
+</html>
